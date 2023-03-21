@@ -1,0 +1,139 @@
+Q2
+package TPReseau;
+
+import java.io.*;
+import java.net.*;
+
+public class emetteurudp {
+
+    private static final int BUFFER_SIZE = 1024;
+    private static final int PORT = 4506;
+
+    public static void main(String[] args) {
+        try {
+            DatagramSocket socket = new DatagramSocket();
+            InetAddress address = InetAddress.getByName("localhost");
+
+            // Création d'un fichier à envoyer
+            File file = new File("C:\\Users\\BENAMEUR\\Desktop\\bino.png");
+            FileInputStream fileInputStream = new FileInputStream(file);
+            byte[] buffer = new byte[BUFFER_SIZE];
+
+            // Lecture du fichier et envoi par paquets UDP
+            int bytesRead = 0;
+            while ((bytesRead = fileInputStream.read(buffer)) != -1) {
+                DatagramPacket packet = new DatagramPacket(buffer, bytesRead, address, PORT);
+                socket.send(packet);
+            }
+
+            // Envoi du paquet final pour indiquer la fin de la transmission
+            byte[] endData = "END".getBytes();
+            DatagramPacket endPacket = new DatagramPacket(endData, endData.length, address, PORT);
+            socket.send(endPacket);
+
+            // Fermeture des flux et de la socket
+            fileInputStream.close();
+            socket.close();
+
+            System.out.println("Fichier envoyé avec succès !");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+}
+
+
+
+
+
+//////////////////////*/////////////////////////////////
+package TPReseau;
+
+import java.io.*;
+import java.net.*;
+
+public class recepteurudp {
+
+	
+	    private static final int BUFFER_SIZE = 1024;
+	    private static final int PORT = 4554;
+
+	    public static void main(String[] args) {
+	        try {
+	            DatagramSocket socket = new DatagramSocket(PORT);
+
+	            // Création d'un fichier pour enregistrer les données reçues
+	            File file = new File("C:\\Users\\BENAMEUR\\Desktop\\e\\bino.png");
+	            FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+	            // Réception des données par paquets UDP
+	            byte[] buffer = new byte[BUFFER_SIZE];
+	            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+	            while (true) {
+	                socket.receive(packet);
+	                if (new String(packet.getData(), 0, packet.getLength()).equals("END")) {
+	                    break;
+	                }
+	                fileOutputStream.write(packet.getData(), 0, packet.getLength());
+	            }
+
+	            // Fermeture des flux et de la socket
+	            fileOutputStream.close();
+	            socket.close();
+
+	            System.out.println("Fichier reçu avec succès !");
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	
+}
+
+
+
+
+
+
+////////////////////////*///////////////////////////////
+package TPReseau;
+
+import java.io.*;
+import java.net.*;
+
+public class recepteurudp1 {
+
+	
+	    private static final int BUFFER_SIZE = 1024;
+	    private static final int PORT = 4553;
+
+	    public static void main(String[] args) {
+	        try {
+	            DatagramSocket socket = new DatagramSocket(PORT);
+
+	            // Création d'un fichier pour enregistrer les données reçues
+	            File file = new File("C:\\Users\\BENAMEUR\\Desktop\\f\\bino.png");
+	            FileOutputStream fileOutputStream = new FileOutputStream(file);
+
+	            // Réception des données par paquets UDP
+	            byte[] buffer = new byte[BUFFER_SIZE];
+	            DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+	            while (true) {
+	                socket.receive(packet);
+	                if (new String(packet.getData(), 0, packet.getLength()).equals("END")) {
+	                    break;
+	                }
+	                fileOutputStream.write(packet.getData(), 0, packet.getLength());
+	            }
+
+	            // Fermeture des flux et de la socket
+	            fileOutputStream.close();
+	            socket.close();
+
+	            System.out.println("Fichier reçu avec succès !");
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	
+}

@@ -1,0 +1,31 @@
+package tp3res;
+import java.io.*;;
+public class tp3 {
+
+	  protected String source;
+	  
+	  public tp3(String source) {
+	    this.source = source;
+	    lecture();
+	  }
+
+	  public static void main(String args[]) {
+	    new tp3("tppp3.txt");
+	  }
+
+	  private void lecture() { 
+	    try {
+	      String ligne ;
+	      BufferedReader fichier = new BufferedReader(new FileReader(source));
+	      
+	      while ((ligne = fichier.readLine()) != null) {
+	          System.out.println(ligne);
+	      }
+
+	      fichier.close();
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }     
+	  }    
+	}
+
